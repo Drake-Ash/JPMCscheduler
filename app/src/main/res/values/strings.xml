@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">JPMCscheduler</string>
+    <string name="token_gen">Generate Token</string>
+    <string name="next">Next</string>
+</resources>
