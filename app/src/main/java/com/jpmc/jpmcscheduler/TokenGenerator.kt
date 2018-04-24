@@ -167,7 +167,8 @@ class TokenGenerator : AppCompatActivity() {
                         timeslot = timeSlots[select_slot],
                         token = key,
                         ba = BankActivity,
-                        number = count
+                        status = false,
+                        num = count
                 )
         ).addOnSuccessListener {
             if (c1 and c2) {

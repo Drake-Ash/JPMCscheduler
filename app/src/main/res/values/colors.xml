@@ -3,12 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="MAT_LIGHT_GRAY2">#E0E0E0</color>
     <color name="white">#ffffff</color>
     <color name="MAT_BROWN_500">#795548</color>
     <color name="GREEN_BLUE">#00cc99</color>
     <color name="GREEN_BLUE_LIGHT">#49ffd1</color>
+    <color name="MAT_LIGHT_GREEN">#81C784</color>
     <color name="MAT_DARK_GRAY">#263238</color>
-    <color name="MAT_MED_GRAY">#455A64</color>
+    <color name="MAT_MED_GRAY">#888888</color>
     <color name="MAT_LIGHT_GRAY">#CCCCCC</color>
     <color name="MAT_LIGHT_RED">#EF5350</color>
     <color name="MAT_BLUE">#1565C0</color>

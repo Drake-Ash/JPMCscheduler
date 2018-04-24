@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import android.support.annotation.NonNull
 import android.app.ProgressDialog
 import android.content.Context
+import android.support.v7.widget.LinearLayoutManager
 import android.transition.TransitionManager
 import android.widget.SpinnerAdapter
 import com.google.firebase.database.DataSnapshot
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.generate_token.*
+import kotlinx.android.synthetic.main.view_token.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -228,7 +230,66 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun populate_user_tokens() {
-        var databaseref = FirebaseDatabase.getInstance().getReference()
+        var User = FirebaseAuth.getInstance().currentUser
+        var databaseref = FirebaseDatabase.getInstance().getReference("Users")
+                .child(User?.email?.replace(".",""))
+                .child("Tokens")
+
+        var token_list: MutableList<Token> = mutableListOf()
+
+        var check = true
+
+        databaseref.addValueEventListener(object :ValueEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                if(p0!!.exists()){
+                    for(p in p0.children){
+                        val temp = p.getValue(Token::class.java)
+                        var time = Date()
+
+                        val dfcheck = SimpleDateFormat("MMMM d, yyyy")
+                        val timecheck = dfcheck.parse(temp?.date)
+
+                        val df = SimpleDateFormat("MMMM d, yyyy")
+                        time.hours = 0
+                        time.minutes = 0
+                        time.seconds = 0
+
+                        if(time.compareTo(timecheck) >= 0){
+                            val df = SimpleDateFormat("HH:mm MMMM d, yyyy")
+                            time = df.parse(temp?.timeslot?.substring(0,5) + " " + temp!!.date)
+//                            time.hours = temp?.timeslot?.substring(0,2)!!.toInt()
+//                            time.minutes = temp?.timeslot?.substring(3,5)!!.toInt()
+//                            time.seconds = 0
+                            val cal = Calendar.getInstance()
+                            cal.time = Date()
+
+                            if(time.compareTo(cal.time)>0){
+                                temp.status = true
+                                token_list.add(temp)
+                            }
+
+                            else{
+                                temp.status = false
+                                token_list.add(temp)
+                            }
+
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(User?.email?.replace(".",""))
+                                    .child("Tokens").child(p.key).child("status").setValue(temp.status)
+                        }
+                    }
+                    token_list.sortByDescending {
+                        it.status
+                    }
+                    tokens_list.layoutManager = LinearLayoutManager(this@MainActivity)
+                    tokens_list.adapter = TokensAdapter(token_list)
+                }
+            }
+        })
     }
 
 
@@ -332,7 +393,8 @@ class MainActivity : AppCompatActivity() {
                                                 timeslot = timeSlots[select_slot],
                                                 token = key,
                                                 ba = BankActivityList[BankAct],
-                                                number = count
+                                                status = true,
+                                                num = count
                                         )
                                 ).addOnSuccessListener {
                                     if (c1 and c2) {

@@ -10,7 +10,8 @@ class Token(
         var timeslot: String,
         var token: String,
         var ba: String,
-        var number: Long
+        var status: Boolean,
+        var num: Long
 ){
-    constructor():this("","","", "", 0L){}
+    constructor():this("","","", "", false, 0L){}
 }
