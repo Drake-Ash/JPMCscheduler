@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_add_token"
+        android:enabled="true"
+        android:icon="@drawable/ic_add_token_black_24dp"
+        android:title="Generate Token"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_view_token"
+        android:enabled="true"
+        android:icon="@drawable/ic_token_black_24dp"
+        android:title="View Token"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_chatbot"
+        android:enabled="true"
+        android:icon="@drawable/ic_chat_black_24dp"
+        android:title="Assistant"
+        app:showAsAction="ifRoom" />
+</menu>

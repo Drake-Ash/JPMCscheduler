@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/MAT_LIGHT_GRAY">
+
+    <com.vipulasri.ticketview.TicketView
+        android:id="@+id/ticketView"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:dividerPadding="0dp"
+        app:dividerType="dash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:scallopPositionPercent="30"
+        app:scallopRadius="15dp"
+        app:showBorder="false"
+        app:showDivider="true"
+        app:ticketElevation="14dp" />
+
+    <TextView
+        android:id="@+id/token_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Token Number: "
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/ticketView"
+        app:layout_constraintStart_toStartOf="@+id/ticketView"
+        app:layout_constraintTop_toTopOf="@+id/ticketView" />
+
+    <TextView
+        android:id="@+id/bankActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:text="BankActivity"
+        app:layout_constraintStart_toStartOf="@+id/ticketView"
+        app:layout_constraintTop_toBottomOf="@+id/token_number" />
+
+    <TextView
+        android:id="@+id/timeslot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Timeslot alloted"
+        app:layout_constraintStart_toStartOf="@+id/bankActivity"
+        app:layout_constraintTop_toBottomOf="@+id/bankActivity" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Status:"
+        app:layout_constraintStart_toStartOf="@+id/timeslot"
+        app:layout_constraintTop_toBottomOf="@+id/timeslot" />
+
+</android.support.constraint.ConstraintLayout>

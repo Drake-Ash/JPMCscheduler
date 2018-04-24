@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SpinnerAdapter
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_token_generator.*
 import java.text.SimpleDateFormat
@@ -20,7 +21,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.Transaction
 import com.google.firebase.database.MutableData
-
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class TokenGenerator : AppCompatActivity() {
@@ -98,6 +99,8 @@ class TokenGenerator : AppCompatActivity() {
 
         }
 
+
+
         gen_token.setOnClickListener {
             var count = 0
             if(select_slot == 0){
@@ -127,16 +130,55 @@ class TokenGenerator : AppCompatActivity() {
 
         var key = databaseref.child(timeSlots[select_slot]).push().key
 
-        databaseref.child(timeSlots[select_slot]).setValue(key)
-        Log.wtf("Test", key)
-        Log.i("Test", key)
-        var temp = AlertDialog.Builder(con)
-        temp.setTitle("Slot Booked!")
-        temp.setPositiveButton("Okay", { dialogInterface: DialogInterface, i: Int ->
-            var tokenIntent = Intent(con, ShowToken::class.java)
-            startActivity(tokenIntent)
+        var c1 = false
+        var c2 = false
+
+        databaseref.child(timeSlots[select_slot]).setValue(key).addOnSuccessListener {
+            c1 = true
+        }
+
+
+        var User = FirebaseAuth.getInstance().currentUser
+        var utot = FirebaseDatabase.getInstance().getReference()
+        var count: Long = 0
+
+        utot.child(dat).child("Tokens").child("count").addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                if(p0!!.exists()){
+                    count = p0.value as Long
+                }
+            }
+
         })
-        temp.show()
+
+        count++
+
+        utot.child(dat).child("Tokens").child("count").setValue(count).addOnSuccessListener {
+            c2= true
+        }
+
+        utot.child("Users").child(User?.email).child("Tokens").setValue(
+                Token(
+                        date = dat,
+                        timeslot = timeSlots[select_slot],
+                        token = key,
+                        ba = BankActivity,
+                        number = count
+                )
+        ).addOnSuccessListener {
+            if (c1 and c2) {
+                var temp = AlertDialog.Builder(con)
+                temp.setTitle("Slot Booked!")
+                temp.setPositiveButton("Okay", { dialogInterface: DialogInterface, i: Int ->
+                    view_token_action.callOnClick()
+                })
+                temp.show()
+            }
+        }
 
     }
 }
