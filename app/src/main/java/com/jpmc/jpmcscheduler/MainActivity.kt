@@ -1,6 +1,5 @@
 package com.jpmc.jpmcscheduler
 
-import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -12,12 +11,10 @@ import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.FirebaseAuth
-import android.support.annotation.NonNull
 import android.app.ProgressDialog
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.transition.TransitionManager
-import android.widget.SpinnerAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -123,7 +120,6 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
         next.setOnClickListener {
             var count = 0
             if (arrivalTime.text.isBlank()) {
@@ -145,9 +141,6 @@ class MainActivity : AppCompatActivity() {
 
             if(count==0){
                 arriveT = arrivalTime.text.toString().toInt()
-                var tokenIntent = Intent(this,TokenGenerator::class.java)
-                timeslot.visibility = View.VISIBLE
-                gen_token.visibility = View.VISIBLE
                 dialog1.show()
                 populate_timeslots()
             }
